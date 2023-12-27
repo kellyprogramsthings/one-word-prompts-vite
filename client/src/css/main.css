@@ -1,0 +1,61 @@
+:root {
+  /* green */
+  --lighterColor: #e5ffef;
+  --lightColor: #bdffd6;
+  --mediumColor: #1fff75;
+  --darkColor: #009e3d;
+  --darkerColor: #003314;
+}
+
+body {
+  background-color: var(--darkerColor) !important;
+}
+
+a:link, a:visited {
+  color: var(--darkColor);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--darkColor) !important;
+  text-decoration: underline;
+}
+
+.links {
+  font-weight: bold;
+  text-align: center;
+}
+
+.todays-owp {
+  text-align: center;
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.todays-other-prompt {
+  text-align: center;
+  font-weight: bold;
+}
+
+.todays-header {
+  text-align: center;
+  font-weight: bold;
+}
+
+div.card {
+  margin-top: 2em;
+  padding: 1em;
+}
+
+.heroku-message {
+  font-size: smaller;
+  text-align: center;
+}
+
+.nav-links {
+  font-weight: bold;
+}
+
+.button-reload {
+  background-color: var(--darkColor);
+}

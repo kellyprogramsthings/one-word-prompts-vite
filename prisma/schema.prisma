@@ -1,0 +1,61 @@
+// npx prisma migrate dev --name [migrationNameGoesHere] --preview-feature
+// npx prisma migrate reset --force
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Prompt {
+  id Int @default(autoincrement()) @id @map(name: "id")
+  name String @unique @map(name: "name")
+  speechTypeId Int? @map(name: "speech_type_id")
+  speechType SpeechType? @relation(fields: [speechTypeId], references: [id])
+  promptTypeId Int? @map(name: "prompt_type_id")
+  promptType PromptType? @relation(fields: [promptTypeId], references: [id])
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  createdByUserId Int @default(0) @map(name: "created_by_user_id")
+  deactivatedAt DateTime? @map(name: "deactivated_at")
+  deactivatedByUserId Int? @map(name: "deactivated_by_user_id")
+  promptHistory PromptHistory[]
+  @@map(name: "prompts")
+}
+
+model SpeechType {
+  id Int @default(autoincrement()) @id @map(name: "id")
+  name String @map(name: "name")
+  prompts Prompt[]
+  @@map(name: "speech_types")
+}
+
+model PromptType {
+  id Int @default(autoincrement()) @id @map(name: "id")
+  name String @map(name: "name")
+  prompts Prompt[]
+  @@map(name: "prompt_types")
+}
+
+model User {
+  id Int @default(autoincrement()) @id @map(name: "id")
+  username String @unique @map(name: "username")
+  password String @map(name: "password")
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  createdByUserId Int? @default(0) @map(name: "created_by_user_id")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  updatedByUserId Int @default(0) @map(name: "updated_by_user_id")
+  deactivatedAt DateTime? @map(name: "deactivated_at")
+  deactivatedByUserId Int? @map(name: "deactivated_by_user_id")
+  @@map(name: "users")
+}
+
+model PromptHistory {
+  id Int @default(autoincrement()) @id @map(name: "id")
+  promptId Int @default(autoincrement()) @map(name: "prompt_id")
+  prompt Prompt @relation(fields: [promptId], references: [id])
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  @@map(name: "prompt_history")
+}
